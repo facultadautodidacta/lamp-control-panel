@@ -1,0 +1,19 @@
+Package: lamp-control-panel
+Version: 1.0.0
+Section: admin
+Priority: optional
+Architecture: all
+Depends: python3, python3-tk, python3-pil, python3-pil.imagetk, systemd, policykit-1
+Maintainer: RAS <dev@ras.local>
+Homepage: https://github.com/TU_USUARIO/lamp-control-panel
+Description: Panel de control gráfico para servicios LAMP
+ Panel de Control LAMP es una interfaz gráfica moderna para gestionar
+ servicios de Apache y MySQL/MariaDB en sistemas basados en Debian.
+ .
+ Características:
+  - Control de servicios (Iniciar, Detener, Reiniciar)
+  - Indicadores de estado en tiempo real
+  - Visor de logs de error
+  - Interfaz con pestañas intuitiva
+  - Tema oscuro elegante
+  - Autenticación con contraseña única por sesión
