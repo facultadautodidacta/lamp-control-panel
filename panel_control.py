@@ -62,13 +62,25 @@ class PanelControlLAMP:
         try:
             # Obtener ruta del script
             directorio_script = os.path.dirname(os.path.abspath(__file__))
-            ruta_logo = os.path.join(directorio_script, "logo.png")
             
-            if os.path.exists(ruta_logo):
+            # Intentar primero con .ico (mejor soporte en Linux)
+            ruta_ico = os.path.join(directorio_script, "lamp-icon.ico")
+            ruta_png = os.path.join(directorio_script, "logo.png")
+            
+            ruta_icono = ruta_ico if os.path.exists(ruta_ico) else ruta_png
+            
+            if os.path.exists(ruta_icono):
                 # Cargar imagen para el icono de la ventana
-                icono_img = Image.open(ruta_logo)
-                # Tkinter acepta el PhotoImage directamente para iconphoto
-                icono_photo = ImageTk.PhotoImage(icono_img)
+                icono_img = Image.open(ruta_icono)
+                
+                # Para mejor compatibilidad, usar múltiples tamaños
+                if ruta_icono.endswith('.ico'):
+                    # El ICO ya tiene múltiples tamaños
+                    icono_photo = ImageTk.PhotoImage(icono_img)
+                else:
+                    # Para PNG, redimensionar a tamaño común
+                    icono_img = icono_img.resize((64, 64), Image.LANCZOS)
+                    icono_photo = ImageTk.PhotoImage(icono_img)
                 
                 # Establecer el icono de la ventana (aparece en la barra de tareas)
                 self.root.iconphoto(True, icono_photo)
