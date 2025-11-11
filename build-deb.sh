@@ -46,6 +46,7 @@ Terminal=false
 Categories=System;Settings;
 Keywords=lamp;apache;mysql;mariadb;server;
 StartupNotify=true
+StartupWMClass=LAMP-Control-Panel
 EOF
 
 # Copiar icono

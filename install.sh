@@ -50,12 +50,22 @@ mkdir -p /usr/share/applications
 mkdir -p /usr/share/icons/hicolor/256x256/apps
 
 # Copiar archivos del programa
-echo -e "${YELLOW}📋 Copiando archivos...${NC}"
+echo "� Copiando archivos..."
 cp panel_control.py /opt/lamp-control-panel/
 cp config.py /opt/lamp-control-panel/
 cp servicios.py /opt/lamp-control-panel/
 cp componentes.py /opt/lamp-control-panel/
 cp logo.png /opt/lamp-control-panel/
+
+# Copiar icono al sistema
+echo "🎨 Instalando icono del sistema..."
+mkdir -p /usr/share/pixmaps
+cp logo.png /usr/share/pixmaps/lamp-control-panel.png
+if [ -f lamp-icon.ico ]; then
+    cp lamp-icon.ico /usr/share/pixmaps/lamp-control-panel.ico
+fi
+
+# Hacer ejecutable
 
 # Copiar logo al directorio de iconos del sistema
 cp logo.png /usr/share/icons/hicolor/256x256/apps/lamp-control-panel.png
@@ -81,6 +91,7 @@ Terminal=false
 Categories=System;Settings;
 Keywords=lamp;apache;mysql;mariadb;server;
 StartupNotify=true
+StartupWMClass=LAMP-Control-Panel
 EOF
 
 # Actualizar caché de iconos

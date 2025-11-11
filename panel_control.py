@@ -27,6 +27,12 @@ class PanelControlLAMP:
         self.root.geometry(f"{ConfiguracionApp.VENTANA_ANCHO}x{ConfiguracionApp.VENTANA_ALTO}")
         self.root.resizable(False, False)
         
+        # Configurar clase de ventana (importante para la barra de tareas en Linux)
+        try:
+            self.root.wm_class("lamp-control-panel", "LAMP-Control-Panel")
+        except:
+            pass
+        
         # Configurar icono de la ventana para la barra de tareas
         self._configurar_icono_ventana()
         
@@ -62,31 +68,39 @@ class PanelControlLAMP:
         try:
             # Obtener ruta del script
             directorio_script = os.path.dirname(os.path.abspath(__file__))
-            
-            # Intentar primero con .ico (mejor soporte en Linux)
-            ruta_ico = os.path.join(directorio_script, "lamp-icon.ico")
             ruta_png = os.path.join(directorio_script, "logo.png")
             
-            ruta_icono = ruta_ico if os.path.exists(ruta_ico) else ruta_png
-            
-            if os.path.exists(ruta_icono):
-                # Cargar imagen para el icono de la ventana
-                icono_img = Image.open(ruta_icono)
+            if os.path.exists(ruta_png):
+                # Cargar imagen
+                icono_img = Image.open(ruta_png)
                 
-                # Para mejor compatibilidad, usar múltiples tamaños
-                if ruta_icono.endswith('.ico'):
-                    # El ICO ya tiene múltiples tamaños
-                    icono_photo = ImageTk.PhotoImage(icono_img)
-                else:
-                    # Para PNG, redimensionar a tamaño común
-                    icono_img = icono_img.resize((64, 64), Image.LANCZOS)
-                    icono_photo = ImageTk.PhotoImage(icono_img)
+                # Convertir a RGBA si no lo está
+                if icono_img.mode != 'RGBA':
+                    icono_img = icono_img.convert('RGBA')
                 
-                # Establecer el icono de la ventana (aparece en la barra de tareas)
-                self.root.iconphoto(True, icono_photo)
+                # Crear múltiples tamaños para mejor compatibilidad
+                tamaños = [16, 24, 32, 48, 64]
+                iconos = []
                 
-                # Mantener referencia para evitar garbage collection
-                self.root._icono_photo = icono_photo
+                for tamaño in tamaños:
+                    img_redimensionada = icono_img.resize((tamaño, tamaño), Image.LANCZOS)
+                    icono_photo = ImageTk.PhotoImage(img_redimensionada)
+                    iconos.append(icono_photo)
+                
+                # Establecer iconos (el True hace que se aplique a todas las ventanas hijas)
+                self.root.iconphoto(True, *iconos)
+                
+                # Intentar también con wm_iconbitmap como fallback para X11
+                try:
+                    # Crear un XBM temporal para sistemas que lo requieren
+                    import tempfile
+                    # Esto es específico para algunos gestores de ventanas en Linux
+                    self.root.wm_iconname("LAMP Panel")
+                except:
+                    pass
+                
+                # Mantener referencias para evitar garbage collection
+                self.root._iconos_photos = iconos
         except Exception as e:
             print(f"No se pudo cargar el icono: {e}")
     
