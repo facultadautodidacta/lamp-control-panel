@@ -27,6 +27,9 @@ class PanelControlLAMP:
         self.root.geometry(f"{ConfiguracionApp.VENTANA_ANCHO}x{ConfiguracionApp.VENTANA_ALTO}")
         self.root.resizable(False, False)
         
+        # Configurar icono de la ventana para la barra de tareas
+        self._configurar_icono_ventana()
+        
         # Configurar tema
         self.tema = TemaOscuro()
         self.root.configure(bg=self.tema.BG_COLOR)
@@ -53,6 +56,27 @@ class PanelControlLAMP:
         
         # Limpiar contraseña al cerrar
         self.root.protocol("WM_DELETE_WINDOW", self._on_closing)
+    
+    def _configurar_icono_ventana(self):
+        """Configura el icono de la ventana para la barra de tareas"""
+        try:
+            # Obtener ruta del script
+            directorio_script = os.path.dirname(os.path.abspath(__file__))
+            ruta_logo = os.path.join(directorio_script, "logo.png")
+            
+            if os.path.exists(ruta_logo):
+                # Cargar imagen para el icono de la ventana
+                icono_img = Image.open(ruta_logo)
+                # Tkinter acepta el PhotoImage directamente para iconphoto
+                icono_photo = ImageTk.PhotoImage(icono_img)
+                
+                # Establecer el icono de la ventana (aparece en la barra de tareas)
+                self.root.iconphoto(True, icono_photo)
+                
+                # Mantener referencia para evitar garbage collection
+                self.root._icono_photo = icono_photo
+        except Exception as e:
+            print(f"No se pudo cargar el icono: {e}")
     
     def _solicitar_password(self):
         """Solicita la contraseña de root al usuario"""
