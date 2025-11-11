@@ -6,9 +6,13 @@
 
 set -e
 
+# Obtener directorio del script
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd "$SCRIPT_DIR"
+
 echo "🔧 Construyendo paquete .deb para Panel de Control LAMP..."
 
-# Limpiar construcción anterior
+# Limpiar construcción anterior (solo directorios de instalación, no DEBIAN)
 rm -rf debian-package/opt
 rm -rf debian-package/usr
 rm -f lamp-control-panel_*.deb
@@ -47,16 +51,10 @@ EOF
 # Copiar icono
 cp logo.png debian-package/usr/share/icons/hicolor/256x256/apps/lamp-control-panel.png
 
-# Crear enlace simbólico
-cd debian-package/usr/local/bin
-ln -sf /opt/lamp-control-panel/panel_control.py lamp-panel
-cd ../../..
+# Crear enlace simbólico en el directorio correcto
+( cd debian-package/usr/local/bin && ln -sf /opt/lamp-control-panel/panel_control.py lamp-panel )
 
-# Dar permisos a scripts DEBIAN
-chmod 755 debian-package/DEBIAN/postinst
-chmod 755 debian-package/DEBIAN/postrm
-
-# Construir paquete
+# Construir paquete (desde el directorio raíz del script)
 dpkg-deb --build debian-package lamp-control-panel_1.0.0_all.deb
 
 echo ""
