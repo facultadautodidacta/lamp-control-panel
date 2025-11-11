@@ -5,14 +5,15 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.x-green.svg)
 ![Platform](https://img.shields.io/badge/platform-Debian%20|%20Ubuntu-orange.svg)
+![Version](https://img.shields.io/badge/version-1.0.0-brightgreen.svg)
 
 **Panel de control gráfico profesional para gestionar servicios LAMP en sistemas basados en Debian**
 
 [Características](#-características) •
 [Instalación](#-instalación) •
 [Uso](#-uso) •
-[Contribuir](#-contribuir) •
-[Licencia](#-licencia)
+[Documentación](docs/README.md) •
+[Contribuir](docs/CONTRIBUTING.md)
 
 </div>
 
@@ -32,164 +33,94 @@
 - 🔐 **Autenticación con contraseña única** (se pide solo una vez por sesión)
 - 🎨 **Tema oscuro elegante** (Catppuccin inspired)
 - 🏗️ **Arquitectura modular** y fácil de mantener
-- 🐧 **Compatible con todos los derivados de Debian**
-  - Ubuntu
-  - Linux Mint
-  - Pop!_OS
-  - Debian
-  - Y más...
+- 🐧 **Compatible con derivados de Debian** (Ubuntu, Mint, Pop!_OS, etc.)
 
-## 🖼️ Capturas
-
-*(Puedes agregar screenshots aquí)*
-
-## 📦 Instalación
+## 📦 Instalación Rápida
 
 ### Opción 1: Script de Instalación (Recomendado)
 
 ```bash
-# Clonar el repositorio
-git clone https://github.com/TU_USUARIO/lamp-control-panel.git
-cd lamp-control-panel
-
-# Ejecutar instalador
+git clone https://github.com/facultadautodidacta/lamp-control-panel.git
+cd lamp-control-panel/scripts
 sudo ./install.sh
 ```
 
 ### Opción 2: Paquete .deb
 
 ```bash
-# Construir el paquete
-./build-deb.sh
-
-# Instalar
+# Descargar desde Releases
+wget https://github.com/facultadautodidacta/lamp-control-panel/releases/download/v1.0.0/lamp-control-panel_1.0.0_all.deb
 sudo dpkg -i lamp-control-panel_1.0.0_all.deb
-sudo apt-get install -f  # Si faltan dependencias
+sudo apt-get install -f
 ```
 
-### Opción 3: Instalación Manual
+### Opción 3: Ejecución desde código fuente
 
 ```bash
-# Instalar dependencias
-sudo apt-get update
+git clone https://github.com/facultadautodidacta/lamp-control-panel.git
+cd lamp-control-panel
 sudo apt-get install python3 python3-tk python3-pil python3-pil.imagetk
-
-# Ejecutar directamente
-python3 panel_control.py
+python3 src/panel_control.py
 ```
 
 ## 🚀 Uso
 
-### Desde el Menú de Aplicaciones
-Busca **"Panel de Control LAMP"** en el menú de aplicaciones de tu sistema
-
-### Desde Terminal
 ```bash
+# Desde el menú de aplicaciones
+Busca "Panel de Control LAMP"
+
+# Desde terminal
 lamp-panel
-```
-
-### Ejecución Directa
-```bash
-python3 /opt/lamp-control-panel/panel_control.py
-```
-
-## 🔧 Requisitos del Sistema
-
-- **Sistema Operativo:** Debian, Ubuntu o derivados
-- **Python:** 3.x
-- **Servicios:** systemd
-- **Privilegios:** sudo/root para controlar servicios
-
-### Dependencias
-
-```
-python3
-python3-tk
-python3-pil
-python3-pil.imagetk
-systemd
-policykit-1
 ```
 
 ## 📁 Estructura del Proyecto
 
 ```
-panelControl/
-├── panel_control.py       # Aplicación principal
-├── config.py             # Configuración (colores, fuentes, rutas)
-├── servicios.py          # Gestor de servicios del sistema
-├── componentes.py        # Componentes visuales reutilizables
-├── logo.png             # Logo de la aplicación
-├── install.sh           # Script de instalación
-├── uninstall.sh         # Script de desinstalación
-├── build-deb.sh         # Constructor de paquete .deb
-├── debian-package/      # Estructura para paquete Debian
-│   └── DEBIAN/
-│       ├── control      # Metadatos del paquete
-│       ├── postinst     # Script post-instalación
-│       └── postrm       # Script post-eliminación
-├── README.md            # Este archivo
-├── LICENSE              # Licencia MIT
-└── CONTRIBUTING.md      # Guía de contribución
+lamp-control-panel/
+├── src/                    # Código fuente Python
+│   ├── panel_control.py   # Aplicación principal
+│   ├── config.py          # Configuración
+│   ├── servicios.py       # Gestor de servicios
+│   └── componentes.py     # Componentes UI
+├── assets/                # Recursos
+│   ├── logo.png          # Logo principal
+│   └── lamp-icon.ico     # Icono multi-tamaño
+├── scripts/               # Scripts de instalación
+│   ├── install.sh        # Instalador
+│   ├── uninstall.sh      # Desinstalador
+│   └── build-deb.sh      # Constructor .deb
+├── packaging/             # Archivos de empaquetado
+│   └── debian/           # Estructura Debian
+├── docs/                  # Documentación
+│   ├── README.md         # Documentación completa
+│   ├── CONTRIBUTING.md   # Guía de contribución
+│   └── screenshots/      # Capturas de pantalla
+├── LICENSE               # Licencia MIT
+└── .gitignore           # Exclusiones de Git
 ```
 
-## 🗑️ Desinstalación
+## 📚 Documentación Completa
 
-### Si instalaste con script:
-```bash
-sudo ./uninstall.sh
-```
-
-### Si instalaste con .deb:
-```bash
-sudo apt-get remove lamp-control-panel
-```
+Para más detalles, consulta la [documentación completa](docs/README.md).
 
 ## 🤝 Contribuir
 
-¡Las contribuciones son bienvenidas! Por favor lee [CONTRIBUTING.md](CONTRIBUTING.md) para detalles sobre nuestro código de conducta y el proceso para enviar pull requests.
+¡Las contribuciones son bienvenidas! Lee nuestra [guía de contribución](docs/CONTRIBUTING.md).
 
-### Áreas donde puedes ayudar:
-- 🌐 Soporte para más servicios (PHP-FPM, PostgreSQL, Nginx, etc.)
-- 🎨 Mejoras en la interfaz
-- 🐧 Soporte para otras distros (Arch, Fedora, etc.)
-- 🌍 Traducciones
-- 📚 Documentación
-- 🧪 Tests automatizados
+## 📝 Licencia
 
-## 🐛 Reportar Issues
+Este proyecto está bajo la Licencia MIT. Ver [LICENSE](LICENSE) para más detalles.
 
-Encontraste un bug? [Abre un issue](https://github.com/TU_USUARIO/lamp-control-panel/issues)
+## 👨‍💻 Autor
 
-## 📝 Changelog
-
-### v1.0.0 (2025-11-11)
-- ✨ Release inicial
-- ⚙️ Control de Apache y MySQL/MariaDB
-- 📋 Visor de logs con múltiples fuentes
-- 🎨 Interfaz con pestañas
-- 🔐 Sistema de autenticación mejorado
-
-## 📄 Licencia
-
-Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
-
-## 👨‍� Autor
-
-**RAS (Roldan Aquino)**
-
-## 🙏 Agradecimientos
-
-- Inspirado en la necesidad de una herramienta simple para gestionar LAMP
-- Diseño de colores basado en Catppuccin
-- Comunidad de código abierto por las herramientas y librerías
+**RAS (Roldan Aquino)** - [facultadautodidacta](https://github.com/facultadautodidacta)
 
 ---
 
 <div align="center">
 
-**Desarrollado con ❤️ por RAS**
+**Desarrollado con ❤️ para la comunidad LAMP**
 
-Si este proyecto te ayuda, ¡dale una ⭐ en GitHub!
+⭐ Si este proyecto te ayuda, dale una estrella en GitHub!
 
 </div>

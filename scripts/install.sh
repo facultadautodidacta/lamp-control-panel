@@ -50,25 +50,25 @@ mkdir -p /usr/share/applications
 mkdir -p /usr/share/icons/hicolor/256x256/apps
 
 # Copiar archivos del programa
-echo "� Copiando archivos..."
-cp panel_control.py /opt/lamp-control-panel/
-cp config.py /opt/lamp-control-panel/
-cp servicios.py /opt/lamp-control-panel/
-cp componentes.py /opt/lamp-control-panel/
-cp logo.png /opt/lamp-control-panel/
+echo "📁 Copiando archivos..."
+cp ../src/panel_control.py /opt/lamp-control-panel/
+cp ../src/config.py /opt/lamp-control-panel/
+cp ../src/servicios.py /opt/lamp-control-panel/
+cp ../src/componentes.py /opt/lamp-control-panel/
+cp ../assets/logo.png /opt/lamp-control-panel/
 
 # Copiar icono al sistema
 echo "🎨 Instalando icono del sistema..."
 mkdir -p /usr/share/pixmaps
-cp logo.png /usr/share/pixmaps/lamp-control-panel.png
-if [ -f lamp-icon.ico ]; then
-    cp lamp-icon.ico /usr/share/pixmaps/lamp-control-panel.ico
+cp ../assets/logo.png /usr/share/pixmaps/lamp-control-panel.png
+if [ -f ../assets/lamp-icon.ico ]; then
+    cp ../assets/lamp-icon.ico /usr/share/pixmaps/lamp-control-panel.ico
 fi
 
 # Hacer ejecutable
 
 # Copiar logo al directorio de iconos del sistema
-cp logo.png /usr/share/icons/hicolor/256x256/apps/lamp-control-panel.png
+cp ../assets/logo.png /usr/share/icons/hicolor/256x256/apps/lamp-control-panel.png
 
 # Hacer ejecutable el script principal
 chmod +x /opt/lamp-control-panel/panel_control.py
