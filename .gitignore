@@ -39,9 +39,10 @@ panel_control_old.py
 *.backup
 
 # Package building
-debian-package/opt/
-debian-package/usr/
+packaging/debian/opt/
+packaging/debian/usr/
 *.deb
+debian-package/
 
 # Logs
 *.log
