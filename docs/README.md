@@ -41,7 +41,14 @@
 
 ## 🖼️ Capturas
 
-*(Puedes agregar screenshots aquí)*
+### Autenticación Segura
+![Solicitud de contraseña](screenshots/01-autenticacion.png)
+
+### Panel de Control de Servicios
+![Control de Apache y MySQL](screenshots/02-panel-servicios.png)
+
+### Visor de Logs Integrado
+![Logs de errores](screenshots/03-visor-logs.png)
 
 ## 📦 Instalación
 

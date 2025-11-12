@@ -73,7 +73,18 @@ Busca "Panel de Control LAMP"
 lamp-panel
 ```
 
-## 📁 Estructura del Proyecto
+## � Capturas de Pantalla
+
+### Autenticación
+![Solicitud de contraseña](docs/screenshots/01-autenticacion.png)
+
+### Panel de Servicios
+![Control de Apache y MySQL](docs/screenshots/02-panel-servicios.png)
+
+### Visor de Logs
+![Logs de errores en tiempo real](docs/screenshots/03-visor-logs.png)
+
+## �📁 Estructura del Proyecto
 
 ```
 lamp-control-panel/
