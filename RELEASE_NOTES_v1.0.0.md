@@ -14,6 +14,7 @@
 - 🎨 **Tema oscuro moderno** - Interfaz elegante y profesional
 - 🔐 **Autenticación única** - Solo pide contraseña una vez
 - 📑 **Interfaz con pestañas** - Servicios y logs organizados
+- ✅ **Verificación de servicios** - Detecta si LAMP está instalado y advierte si falta
 
 ---
 
@@ -63,6 +64,10 @@ lamp-panel
 - **Servicios**: Apache2 y MySQL/MariaDB instalados
 - **Otros**: systemd, policykit-1
 
+> **💡 Nota**: Si Apache o MySQL no están instalados, el instalador te lo advertirá
+> y te dará instrucciones. La aplicación funcionará pero no podrás gestionar
+> los servicios que no estén instalados.
+
 ---
 
 ## 📸 Capturas
@@ -106,7 +111,7 @@ En futuras versiones:
 
 **SHA256:**
 ```
-6c386c6634bc02e2683fe93bab8642362f9c55ce947457c1899f962080e1f124
+9a7d46952dbae781c3fa630ba4927106193ffccfc51e50c29b61b46db8e1791c
 ```
 
 ---
