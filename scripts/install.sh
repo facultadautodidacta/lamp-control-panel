@@ -43,6 +43,66 @@ apt-get install -y \
 
 echo -e "${GREEN}✓ Dependencias instaladas${NC}"
 
+# Verificar si Apache y MySQL están instalados
+echo -e "${YELLOW}🔍 Verificando servicios LAMP...${NC}"
+
+APACHE_INSTALLED=false
+MYSQL_INSTALLED=false
+
+# Verificar Apache
+if systemctl list-unit-files | grep -q "apache2.service"; then
+    APACHE_INSTALLED=true
+    echo -e "${GREEN}  ✓ Apache2 detectado${NC}"
+else
+    echo -e "${YELLOW}  ⚠ Apache2 no está instalado${NC}"
+fi
+
+# Verificar MySQL/MariaDB
+if systemctl list-unit-files | grep -qE "(mysql|mariadb).service"; then
+    MYSQL_INSTALLED=true
+    echo -e "${GREEN}  ✓ MySQL/MariaDB detectado${NC}"
+else
+    echo -e "${YELLOW}  ⚠ MySQL/MariaDB no está instalado${NC}"
+fi
+
+# Advertencia si faltan servicios
+if [ "$APACHE_INSTALLED" = false ] || [ "$MYSQL_INSTALLED" = false ]; then
+    echo ""
+    echo -e "${YELLOW}╔════════════════════════════════════════════════════╗${NC}"
+    echo -e "${YELLOW}║            ⚠️  ADVERTENCIA IMPORTANTE               ║${NC}"
+    echo -e "${YELLOW}╚════════════════════════════════════════════════════╝${NC}"
+    echo ""
+    echo -e "${YELLOW}El Panel de Control LAMP requiere que los servicios${NC}"
+    echo -e "${YELLOW}estén instalados para funcionar correctamente.${NC}"
+    echo ""
+    
+    if [ "$APACHE_INSTALLED" = false ]; then
+        echo -e "${CYAN}Para instalar Apache:${NC}"
+        echo -e "  sudo apt-get install apache2"
+        echo ""
+    fi
+    
+    if [ "$MYSQL_INSTALLED" = false ]; then
+        echo -e "${CYAN}Para instalar MySQL:${NC}"
+        echo -e "  sudo apt-get install mysql-server"
+        echo -e "${CYAN}O MariaDB:${NC}"
+        echo -e "  sudo apt-get install mariadb-server"
+        echo ""
+    fi
+    
+    echo -e "${YELLOW}¿Deseas continuar con la instalación de todas formas? [s/N]${NC}"
+    read -r response
+    
+    if [[ ! "$response" =~ ^[Ss]$ ]]; then
+        echo -e "${RED}❌ Instalación cancelada${NC}"
+        echo -e "${CYAN}💡 Instala los servicios LAMP primero y vuelve a ejecutar este script${NC}"
+        exit 0
+    fi
+    
+    echo -e "${YELLOW}⚠️  Continuando con la instalación...${NC}"
+    echo ""
+fi
+
 # Crear directorios
 echo -e "${YELLOW}📁 Creando directorios...${NC}"
 mkdir -p /opt/lamp-control-panel

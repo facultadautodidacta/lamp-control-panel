@@ -43,6 +43,9 @@ class PanelControlLAMP:
         # Inicializar gestor de servicios
         self.gestor_servicios = GestorServicios()
         
+        # Verificar servicios LAMP instalados
+        self._verificar_servicios_lamp()
+        
         # Solicitar contraseña al inicio
         self._solicitar_password()
         
@@ -103,6 +106,59 @@ class PanelControlLAMP:
                 self.root._iconos_photos = iconos
         except Exception as e:
             print(f"No se pudo cargar el icono: {e}")
+    
+    def _verificar_servicios_lamp(self):
+        """Verifica si los servicios LAMP están instalados"""
+        import subprocess
+        
+        servicios_faltantes = []
+        
+        # Verificar Apache
+        try:
+            resultado = subprocess.run(
+                ['systemctl', 'list-unit-files', 'apache2.service'],
+                capture_output=True,
+                text=True
+            )
+            if 'apache2.service' not in resultado.stdout:
+                servicios_faltantes.append('Apache2')
+        except:
+            servicios_faltantes.append('Apache2')
+        
+        # Verificar MySQL/MariaDB
+        mysql_encontrado = False
+        for servicio in ['mysql.service', 'mariadb.service']:
+            try:
+                resultado = subprocess.run(
+                    ['systemctl', 'list-unit-files', servicio],
+                    capture_output=True,
+                    text=True
+                )
+                if servicio in resultado.stdout:
+                    mysql_encontrado = True
+                    break
+            except:
+                pass
+        
+        if not mysql_encontrado:
+            servicios_faltantes.append('MySQL/MariaDB')
+        
+        # Mostrar advertencia si faltan servicios
+        if servicios_faltantes:
+            mensaje = "⚠️ SERVICIOS NO DETECTADOS\n\n"
+            mensaje += "Los siguientes servicios no están instalados:\n"
+            mensaje += "\n".join(f"  • {s}" for s in servicios_faltantes)
+            mensaje += "\n\nEl panel se abrirá, pero no podrás gestionar "
+            mensaje += "los servicios que no estén instalados.\n\n"
+            mensaje += "Para instalar los servicios faltantes:\n"
+            
+            if 'Apache2' in servicios_faltantes:
+                mensaje += "\n  Apache: sudo apt-get install apache2"
+            if 'MySQL/MariaDB' in servicios_faltantes:
+                mensaje += "\n  MySQL: sudo apt-get install mysql-server"
+                mensaje += "\n  MariaDB: sudo apt-get install mariadb-server"
+            
+            messagebox.showwarning("Servicios LAMP no instalados", mensaje)
     
     def _solicitar_password(self):
         """Solicita la contraseña de root al usuario"""

@@ -37,6 +37,14 @@
 
 ## 📦 Instalación Rápida
 
+> **⚠️ Requisito previo**: Necesitas tener Apache y MySQL/MariaDB instalados.
+> 
+> Si aún no los tienes:
+> ```bash
+> sudo apt-get install apache2 mysql-server
+> # o MariaDB: sudo apt-get install apache2 mariadb-server
+> ```
+
 ### Opción 1: Script de Instalación (Recomendado)
 
 ```bash
